@@ -1,0 +1,26 @@
+- name: "Enable RHEL 8 RPMs repositories"
+  redhat.satellite.repository_set:
+    username: "{{rhsat_username}}"
+    password: "{{rhsat_password}}"
+    server_url: "https://{{rhsat_servername}}"
+    organization: "{{rhsat_org}}"
+    validate_certs: false
+    label: "{{item.label}}"
+    repositories: "{{ item.repositories | default(omit) }}"
+    all_repositories: "{{ item.repositories is not defined }}"
+    state: enabled
+  loop:
+    - label: rhel-8-for-x86_64-baseos-rpms
+      repositories:
+        - releasever: "8"
+        - releasever: "8.8"
+        - releasever: "8.9"
+        - releasever: "8.10"
+    - label: rhel-8-for-x86_64-appstream-rpms
+      repositories:
+        - releasever: "8"
+        - releasever: "8.8"
+        - releasever: "8.9"
+        - releasever: "8.10"
+    - label: satellite-client-6-for-rhel-8-x86_64-rpms
+

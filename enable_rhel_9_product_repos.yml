@@ -1,0 +1,30 @@
+- name: "Enable RHEL 9 RPMs repositories"
+  redhat.satellite.repository_set:
+    username: "{{rhsat_username}}"
+    password: "{{rhsat_password}}"
+    server_url: "https://{{rhsat_servername}}"
+    organization: "{{rhsat_org}}"
+    validate_certs: false
+    label: "{{item.label}}"
+    repositories: "{{ item.repositories | default(omit) }}"
+    all_repositories: "{{ item.repositories is not defined }}"
+    state: enabled
+  loop:
+    - label: rhel-9-for-x86_64-baseos-rpms
+      repositories:
+        - releasever: "9"
+        - releasever: "9.0"
+        - releasever: "9.1"
+        - releasever: "9.2"
+        - releasever: "9.3"
+        - releasever: "9.4"
+    - label: rhel-9-for-x86_64-appstream-rpms
+      repositories:
+        - releasever: "9"
+        - releasever: "9.0"
+        - releasever: "9.1"
+        - releasever: "9.2"
+        - releasever: "9.3"
+        - releasever: "9.4"
+    - label: satellite-client-6-for-rhel-9-x86_64-rpms
+

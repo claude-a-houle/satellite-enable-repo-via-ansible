@@ -1,0 +1,41 @@
+- name: "Enable RHEL 7 RPMs repositories"
+  redhat.satellite.repository_set:
+    username: "{{rhsat_username}}"
+    password: "{{rhsat_password}}"
+    server_url: "https://{{rhsat_servername}}"
+    organization: "{{rhsat_org}}"
+    validate_certs: false
+    label: "{{item.label}}"
+    repositories: "{{ item.repositories | default(omit) }}"
+    all_repositories: "{{ item.repositories is not defined }}"
+    state: enabled
+  loop:
+    - label: rhel-7-server-rpms
+      repositories:
+        - releasever: '7.9'
+          basearch: 'x86_64'
+    - label: rhel-7-server-optional-rpms
+      repositories:
+        - releasever: '7.9'
+          basearch: 'x86_64'
+    - label: rhel-7-server-extras-rpms
+    - label: rhel-7-server-satellite-client-6-rpms
+    - label: rhel-7-server-rpms
+      repositories:
+        - releasever: '7Server'
+          basearch: 'x86_64'
+    - label: rhel-7-server-optional-rpms
+      repositories:
+        - releasever: '7Server'
+          basearch: 'x86_64'
+    - label: rhel-server-rhscl-7-rpms
+      repositories:
+        - releasever: '7.9'
+          basearch: 'x86_64'
+    - label: rhel-server-rhscl-7-rpms
+      repositories:
+        - releasever: '7Server'
+          basearch: 'x86_64'
+    - label: rhel-7-server-els-rpms
+    - label: rhel-7-server-satellite-client-6-rpms
+
