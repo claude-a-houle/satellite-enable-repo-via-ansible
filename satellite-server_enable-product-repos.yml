@@ -1,0 +1,41 @@
+---
+- name: Enable Product Repos on a Satellite Server
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  become: false
+
+  vars_prompt:
+    - name: rhsat_username
+      prompt: "Red Hat Satellite Username"
+      private: false
+
+    - name: rhsat_password
+      prompt: "Red Hat Satellite Password"
+      private: true
+
+    - name: rhsat_servername
+      prompt: "Red Hat Satellite Servername"
+      private: false
+
+    - name: rhsat_org
+      prompt: "Red Hat Satellite Organization"
+      private: false
+
+  tasks:
+    - name: Enable RHEL 9 Product Repos
+      ansible.builtin.include_tasks: enable_rhel_9_product_repos.yml
+      tags: enable_rhel9_repos
+
+    - name: Enable RHEL 8 Product Repos
+      ansible.builtin.include_tasks: enable_rhel_8_product_repos.yml
+      tags: enable_rhel8_repos
+
+    - name: Enable RHEL 7 Product Repos
+      ansible.builtin.include_tasks: enable_rhel_7_product_repos.yml
+      tags: enable_rhel7_repos
+
+    - name: Enable Capsule Product Repos
+      ansible.builtin.include_tasks: enable_capsules_product_repos.yml
+      tags: enable_capsule_repos
+
